@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block other %}
+<script type="application/javascript"  src="{{ static_url('js/chat.js') }}"></script>
+{% end %}
+{% block main %}
+<div id="chat">
+    <div id="left">
+
+    </div>
+    <div id="right">
+        <div id="charhistory">
+    
+        </div>
+        <div id="send">
+            <textarea type="text" id="message" ></textarea>
+            <button id="sendmessage">发送</button>
+        </div>
+    </div>
+</div>
+<a href="/quit"><button id="quit">退出</button></a>
+{% end %}
