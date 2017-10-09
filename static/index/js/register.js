@@ -17,12 +17,13 @@ $(document).ready(function () {
                 data = "userId=" + value
             }
             $.getJSON("/check?" + data, function (data) {
-                if (data.length) {
+                if (data.length>0) {
                     $("." + attr).remove()
                     $(t).after("<p class= \'" + attr + "\' " + "style='color: red'>已被占用！</p>")
                 }
                 else {
-                    $("#submit").attr("disabled", "none")
+                    console.log(data.length)
+                    $("#submit").removeAttr("disabled")
                 }
             })
         }
