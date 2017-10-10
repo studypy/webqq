@@ -1,22 +1,56 @@
 var ws = new WebSocket("ws://10.0.142.104:8000/chat")
-
+var chatuser = []
 function sendmessage() {
     var msg = document.getElementById("message").value
     if (msg == "") {
         return
     }
-    ws.send(msg)
-    msg = msg + "<span style='color: red'>:[我]</span>"
-    $("#charhistory").html($("#charhistory").html() + "<p style='text-align: right'>" + msg + "</p>")
+    $("#charhistory").html($("#charhistory").html() + "<p style='text-align: right'>" + msg + "<span style='color: red'>:[我]</span>" + "</p>")
     document.getElementById("message").value = ""
+    var msguser = "<span style='color:blue;'>"
+    if (chatuser.length > 0)
+    {
+        msguser = "<span style='color:purple;font-weight: bolder'>"
+        msguser += "."
+        for( i in chatuser){
+            msguser += chatuser[i] + "."
+        }
+    }
+    ws.send(msguser + "|" + msg)
 }
 
 function change() {
     $.getJSON('/flist', function (data) {
         $("#left").html("")
-        for (i in data) {
-            $("#left").html($("#left").html() + "<p>" + data[i] + "</p>")
+        var temp = []
+        for (i in data){
+            for (j in chatuser){
+                if (data[i] == chatuser[j]) {
+                    temp.push(data[i])
+                    break
+                }
+            }
         }
+        chatuser = temp
+        for (i in data) {
+            var  color = "<p>"
+            for (j in chatuser){
+                if (data[i] == chatuser[j]) {
+                    color = "<p style='color: red'>"
+                }
+            }
+            $("#left").html($("#left").html() + color + data[i] + "</p>")
+        }
+        $("#left p").click(function () {
+            if($(this).css("color").toString() == "rgb(53, 61, 68)"){
+                $(this).css("color","rgb(255, 0, 0)")
+                chatuser.push($(this).text().toString())
+            }
+            else {
+                $(this).css("color","rgb(53, 61, 68)")
+                chatuser.pop($(this).text().toString())
+            }
+        })
     })
 }
 

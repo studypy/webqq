@@ -21,6 +21,7 @@ div{
     flex-flow: row nowrap;
 }
 #left{
+    overflow: auto;
     height: 100%;
     flex-grow: 2;
     text-align: left;

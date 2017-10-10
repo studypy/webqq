@@ -73,10 +73,27 @@ class ChatWebSocker(WebSocketHandler):
             user.write_message(u"<span style='color:green;'>[%s]登陆了</span>" % self.username)
 
     def on_message(self, message):
+        messagelist =  message.split("|", 1)
+        message = messagelist[-1]
+        msguser = messagelist[0]
+        userlist = []
+
+        if msguser[-1] == ".":
+            msguserlist= msguser[:-1].split(".")
+            msguser = msguserlist[0]
+            del msguserlist[0]
+            if self.username in msguserlist:
+                msguserlist.remove(self.username)
+            userlist = msguserlist
         for user in self.users:
             if user == self:
                 continue
-            user.write_message(r"<span style='color:blue;'>[%s]：</span>%s" % (self.username, message))
+            if msguser[-1] == "." and len(userlist):
+                if user.username in userlist:
+                    print(msguser + r"[%s]：</span>%s" % (self.username, message))
+                    user.write_message(msguser + r"[%s]：</span>%s" % (self.username, message))
+                continue
+            user.write_message(msguser+r"[%s]：</span>%s" % (self.username, message))
 
     def on_close(self):
         self.application.user.remove(self.username)
@@ -100,4 +117,8 @@ class CheckHandler(RequestHandler):
 
 class FlistHandler(RequestHandler):
     def get(self, *args, **kwargs):
-        self.write(json.dumps(self.application.user))
+        self.username = self.request.headers["Cookie"].split("=")[-1]
+        flist = self.application.user.copy()
+        if self.username in flist:
+            flist.remove(self.username)
+        self.write(json.dumps(flist))

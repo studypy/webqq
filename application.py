@@ -5,6 +5,7 @@ import mysqltool
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
+            (r'/', SuccessHandler),
             (r'/index', IndexHandler),
             (r'/login', LoginHandler),
             (r'/success', SuccessHandler),
