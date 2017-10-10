@@ -52,6 +52,12 @@ $(document).ready(function () {
                     chatuser.pop($(this).text().toString())
                 }
             })
+            $("#left p").dblclick(function () {
+                $("#left p").css("color", "rgb(53, 61, 68)")
+                chatuser = []
+                $(this).css("color", "rgb(255, 0, 0)")
+                chatuser.push($(this).text().toString())
+            })
         })
     }
 
