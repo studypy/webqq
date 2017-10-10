@@ -88,9 +88,8 @@ class ChatWebSocker(WebSocketHandler):
         for user in self.users:
             if user == self:
                 continue
-            if msguser[-1] == "." and len(userlist):
+            if len(userlist):
                 if user.username in userlist:
-                    print(msguser + r"[%s]：</span>%s" % (self.username, message))
                     user.write_message(msguser + r"[%s]：</span>%s" % (self.username, message))
                 continue
             user.write_message(msguser+r"[%s]：</span>%s" % (self.username, message))
