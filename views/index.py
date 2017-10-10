@@ -67,7 +67,7 @@ class ChatWebSocker(WebSocketHandler):
     users = []
     def open(self, *args, **kwargs):
         self.users.append(self)
-        self.username = self.request.headers["Cookie"].split("=")[-1]
+        self.username = self.request.headers["Cookie"].split("username=")[-1].split(";")[0]
         self.application.user.append(self.username)
         for user in self.users:
             user.write_message(u"<span style='color:green;'>[%s]登陆了</span>" % self.username)
@@ -116,7 +116,7 @@ class CheckHandler(RequestHandler):
 
 class FlistHandler(RequestHandler):
     def get(self, *args, **kwargs):
-        self.username = self.request.headers["Cookie"].split("=")[-1]
+        self.username = self.request.headers["Cookie"].split("username=")[-1].split(";")[0]
         flist = self.application.user.copy()
         if self.username in flist:
             flist.remove(self.username)
