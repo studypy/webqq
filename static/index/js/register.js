@@ -17,7 +17,7 @@ $(document).ready(function () {
                 data = "userId=" + value
             }
             $.getJSON("/check?" + data, function (data) {
-                if (data.length>0) {
+                if (data.length > 0) {
                     $("." + attr).remove()
                     $(t).after("<p class= \'" + attr + "\' " + "style='color: red'>已被占用！</p>")
                 }

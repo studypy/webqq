@@ -34,7 +34,6 @@ div{
 }
 #charhistory{
     overflow: auto;
-    /*flex-grow: 9;*/
     height: 90%;
 }
 #charhistory p{
@@ -43,7 +42,6 @@ div{
 #send{
     display: flex;
     flex-flow: row nowrap;
-    /*flex-grow: 1;*/
     height: 10%;
 }
 #message{
