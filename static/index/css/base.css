@@ -60,3 +60,25 @@ div{
     top: 0;
     right: 0;
 }
+#help{
+    position: absolute;
+    background-color: green;
+    width: 40px;
+    line-height: 25px;
+    height: 25px;
+    top: 0;
+    left: 0;
+}
+#username{
+    font-weight: bolder;
+    color: blue;
+}
+
+#helpmsg p{
+    font-weight: bolder;
+}
+#helpmsg p:first-child{
+    color: red;
+    font-size: large;
+    font-weight: bolder;
+}

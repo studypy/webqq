@@ -1,6 +1,11 @@
 $(document).ready(function () {
     var ws = new WebSocket("ws://10.0.142.104:8000/chat")
     var chatuser = []
+    $("#helpmsg").hide()
+    $("#help").click(function () {
+        $("#helpmsg").toggle()
+        $("#chat").toggle()
+    })
 
     function sendmessage() {
         var msg = document.getElementById("message").value
@@ -22,7 +27,7 @@ $(document).ready(function () {
 
     function change() {
         $.getJSON('/flist', function (data) {
-            $("#left").html("")
+            $("#left p").remove()
             var temp = []
             for (i in data) {
                 for (j in chatuser) {

@@ -5,6 +5,7 @@
 {% block main %}
 <div id="chat">
     <div id="left">
+        <div id="username"><span>{{username}}</span></div>
 
     </div>
     <div id="right">
@@ -17,5 +18,14 @@
         </div>
     </div>
 </div>
+<div id="helpmsg">
+    <p>友情提示</p>
+    <p>功能概述：登录，注册，群聊，私聊，实施跟新好友列表</p>
+    <p>注册登录：注册昵称和账户唯一，统一用户不得二次登录</p>
+    <p>好友列表：实施更新，单击切换状态，双击私聊（变红）</p>
+    <p>聊天记录：上下线提醒，上线绿色，下线黄色，私聊紫色</p>
+    <a href="/quit"><button id="quit">退出</button></a>
+</div>
 <a href="/quit"><button id="quit">退出</button></a>
+<a ><button id="help">帮助</button></a>
 {% end %}
