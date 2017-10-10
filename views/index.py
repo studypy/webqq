@@ -22,7 +22,7 @@ class LoginHandler(RequestHandler):
             loginname = res[0][-1]
             if loginname not in self.application.user:
                 self.set_cookie('username', loginname)
-                # self.set_secure_cookie('username', username)
+                # self.set_secure_cookie('username', loginname)
                 self.redirect('/success')
             else:
                 self.render('index/login.html', flag="login", title="登录界面")
@@ -37,7 +37,7 @@ class SuccessHandler(RequestHandler):
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
         username = self.get_cookie('username')
-        # username = self.get_secure_cookie('username', 'Visitor')
+        # username = self.get_secure_cookie('username')
         self.render('index/chat.html', username=username, title="聊天界面")
 
 
