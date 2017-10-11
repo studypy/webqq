@@ -98,6 +98,8 @@ class ChatWebSocker(WebSocketHandler):
         for user in self.users:
             user.write_message(u"<span style='color:yellow;'>[%s]下线了</span>" % self.username)
 
+    def check_origin(self, origin):
+        return True
 
 class CheckHandler(RequestHandler):
     def get(self, *args, **kwargs):

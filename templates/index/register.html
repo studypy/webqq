@@ -4,6 +4,7 @@
 {% end %}
 {% block main %}
 <form action="/register" method="post">
+    {% raw xsrf_form_html() %}
     昵  称<input id="userId" type="text" name="username" placeholder="请制订你的昵称" required/><br/>
     帐  号<input id="username" type="text" name="userId" required/><br/>
     密  码<input type="password" name="password" required/><br/>
