@@ -63,6 +63,7 @@ class RegisterHandler(RequestHandler):
 
 class ChatWebSocker(WebSocketHandler):
     users = []
+
     def open(self, *args, **kwargs):
         self.users.append(self)
         self.username = self.get_secure_cookie("username").decode()
@@ -71,13 +72,13 @@ class ChatWebSocker(WebSocketHandler):
             user.write_message(u"<span style='color:green;'>[%s]登陆了</span>" % self.username)
 
     def on_message(self, message):
-        messagelist =  message.split("|", 1)
+        messagelist = message.split("|", 1)
         message = messagelist[-1]
         msguser = messagelist[0]
         userlist = []
 
         if msguser[-1] == ".":
-            msguserlist= msguser[:-1].split(".")
+            msguserlist = msguser[:-1].split(".")
             msguser = msguserlist[0]
             del msguserlist[0]
             if self.username in msguserlist:
@@ -90,7 +91,7 @@ class ChatWebSocker(WebSocketHandler):
                 if user.username in userlist:
                     user.write_message(msguser + r"[%s]：</span>%s" % (self.username, message))
                 continue
-            user.write_message(msguser+r"[%s]：</span>%s" % (self.username, message))
+            user.write_message(msguser + r"[%s]：</span>%s" % (self.username, message))
 
     def on_close(self):
         self.application.user.remove(self.username)
@@ -100,6 +101,7 @@ class ChatWebSocker(WebSocketHandler):
 
     def check_origin(self, origin):
         return True
+
 
 class CheckHandler(RequestHandler):
     def get(self, *args, **kwargs):
@@ -113,6 +115,7 @@ class CheckHandler(RequestHandler):
         res = self.application.db.get_all(sql)
         res = json.dumps(res)
         self.write(res)
+
 
 class FlistHandler(RequestHandler):
     def get(self, *args, **kwargs):
