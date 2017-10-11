@@ -21,8 +21,7 @@ class LoginHandler(RequestHandler):
         if res:
             loginname = res[0][-1]
             if loginname not in self.application.user:
-                self.set_cookie('username', loginname)
-                # self.set_secure_cookie('username', loginname)
+                self.set_secure_cookie('username', loginname)
                 self.redirect('/success')
             else:
                 self.render('index/login.html', flag="login", title="登录界面")
@@ -36,8 +35,7 @@ class SuccessHandler(RequestHandler):
 
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
-        username = self.get_cookie('username')
-        # username = self.get_secure_cookie('username')
+        username = self.get_secure_cookie('username').decode()
         self.render('index/chat.html', username=username, title="聊天界面")
 
 
@@ -67,7 +65,7 @@ class ChatWebSocker(WebSocketHandler):
     users = []
     def open(self, *args, **kwargs):
         self.users.append(self)
-        self.username = self.request.headers["Cookie"].split("username=")[-1].split(";")[0]
+        self.username = self.get_secure_cookie("username").decode()
         self.application.user.append(self.username)
         for user in self.users:
             user.write_message(u"<span style='color:green;'>[%s]登陆了</span>" % self.username)
@@ -116,7 +114,7 @@ class CheckHandler(RequestHandler):
 
 class FlistHandler(RequestHandler):
     def get(self, *args, **kwargs):
-        self.username = self.request.headers["Cookie"].split("username=")[-1].split(";")[0]
+        self.username = self.get_secure_cookie("username").decode()
         flist = self.application.user.copy()
         if self.username in flist:
             flist.remove(self.username)
